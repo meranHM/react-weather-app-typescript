@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    width: 100dvw;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    font-family: "Roboto", sans-serif;
+    background: linear-gradient(to bottom, #3B82F6, #1E40AF);
+}
+
+#root {
+   min-height: 100%;
+}
