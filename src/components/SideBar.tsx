@@ -1,8 +1,9 @@
 import { Star, Info, MapPinPlusInside } from 'lucide-react'
 import Information from './Information'
+import { SideBarProps } from '../types'
 
-const SideBar = (props) => {
-    const {otherForecast, locations, formSubmit, openManageLocationsModal, favLocation, forecast, timeOfDay, hour, openInfoModal, closeInfoModal, infoModal, roundedTemp } = props
+const SideBar: React.FC<SideBarProps> = (props) => {
+    const {otherForecast, locations, formSubmit, openManageLocationsModal, favLocation, forecast, timeOfDay, openInfoModal, closeInfoModal, infoModal, roundedValues } = props
 
     //Rendering list of elements for the sidebar list
     const cityElements = locations.map(({id}) => {
@@ -45,21 +46,22 @@ const SideBar = (props) => {
                                 closeInfoModal={closeInfoModal}/>
                 }
                 </div>
-                {forecast &&
-                <div id="favorite-location-container"
-                     className="flex justify-between"
-                >
-                    <p className="text-2xl ml-8">
-                        {favLocation}
-                    </p>
-                    <p className="flex items-center gap-2 text-2xl">
-                        <img src={timeOfDay}
-                             alt={(hour >= 6 && hour < 19) ? "Sun Icon" : "Moon Icon"} 
-                             className="w-6"
-                        />
-                        {roundedTemp}&deg;
-                    </p>
-                </div>}
+                {forecast && (
+                    <div id="favorite-location-container"
+                        className="flex justify-between"
+                    >
+                        <p className="text-2xl ml-8">
+                            {favLocation}
+                        </p>
+                        <p className="flex items-center gap-2 text-2xl">
+                            <img src={timeOfDay?.dayOrNight}
+                                alt={timeOfDay?.isDay ? "Sun Icon" : "Moon Icon"} 
+                                className="w-6"
+                            />
+                            {roundedValues?.roundedTemp}&deg;
+                        </p>
+                    </div>
+                )}
             </div>
             {/* Other locations container */}
             <div className="mt-4 w-full flex flex-col items-center">

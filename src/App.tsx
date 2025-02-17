@@ -46,7 +46,6 @@ const App = () => {
   const hasFavorite: boolean = favLocation.city !== ""
  
   //Choosing icon and background based on local time
-
   const getTimeOfDay = (): {dayOrNight: string, isDay: boolean} | undefined => {
     if (!forecast) {
       console.error("Forecast data is not available")
@@ -61,12 +60,10 @@ const App = () => {
     if (hour >= 6 && hour < 19) {
         dayOrNight = dayIcon
         isDay = true
-      } else if (hour >= 19 && hour < 6) {
+      } else {
         dayOrNight = nightIcon
         isDay = false
-      } else {
-        console.error("hour is not provided correctly")
-    }
+      }
     return {dayOrNight, isDay}
   }
   const timeOfDay = getTimeOfDay()
@@ -358,13 +355,13 @@ const App = () => {
                   <p className="flex gap-2"><Radiation/>AQI</p>
                   <p className="text-nowrap">{aqi}</p>
                 </div>
-                {weatherAlerts && (
+                {weatherAlerts ? weatherAlerts.alerts.alert[0]  && (
                   <div id="alerts" className="flex justify-between items-center bg-white/10 backdrop-blur-md rounded-lg p-5 mt-10 shadow-lg border border-white/20 w-11/12 text-center">
-                    <p className="text-center text-lg">
-                      {weatherAlerts.alerts.alert[0]?.desc}
+                    <p className="text-center tracking-wider text-lg">
+                      {weatherAlerts.alerts.alert[0].desc}
                     </p>
                   </div>
-                )}
+                ) : null}
               </div>
             )}
           </motion.div>
@@ -378,34 +375,34 @@ const App = () => {
 
           >
             <SideBar 
-                formSubmit={formSubmit}
                 locations={locations}
-                openManageLocationsModal={openManageLocationsModal}
                 favLocation={favLocation.city}
                 forecast={forecast}
                 otherForecast={otherForecast}
                 otherError={otherError}
                 timeOfDay={timeOfDay}
                 infoModal={infoModal}
+                roundedValues={roundedValues}
+                openManageLocationsModal={openManageLocationsModal}
                 openInfoModal={openInfoModal}
                 closeInfoModal={closeInfoModal}
-                roundedValues={roundedValues}
+                formSubmit={formSubmit}
             />
         </motion.div>
         {manageLocsModal && 
           <ManageLocations
-            closeManageLocationsModal={closeManageLocationsModal}
             infoModal={infoModal}
+            forecast={forecast}
+            otherForecast={otherForecast}
+            locations={locations}
+            favLocation={favLocation.city}
+            roundedValues={roundedValues}
+            timeOfDay={timeOfDay}
+            closeManageLocationsModal={closeManageLocationsModal}
             openInfoModal={openInfoModal}
             closeInfoModal={closeInfoModal}
             toggleFavorite={toggleFavorite}
             handleDelete={handleDelete}
-            forecast={forecast}
-            otherForecast={otherForecast}
-            favLocation={favLocation.city}
-            locations={locations}
-            roundedValues={roundedValues}
-            timeOfDay={timeOfDay}
           />}
       </div>
     </main>

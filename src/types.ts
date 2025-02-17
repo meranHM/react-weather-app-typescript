@@ -23,6 +23,14 @@ export type Forecast = {
           maxtemp_c: number
           mintemp_c: number
         }
+        hour: {
+          time: string
+          temp_c: number
+          humidity: number
+          condition: {
+            icon: string
+          }
+        }[]
         astro: {
           sunrise: string
           sunset: string
@@ -78,9 +86,73 @@ export type UvLevels = {
     10: string
 }
 
-//Type for Locations
+//Type for Locations object
 export type Locations = {
     id: string
     city: string
 }
 
+//Type for Other Locations object
+export type OtherLocations = {
+    id: string
+    temp: number
+    maxTemp: number
+    minTemp: number
+    city: string
+    country: string
+    localTime: string
+}
+
+//Type for SideBar props object
+export type SideBarProps = {
+  formSubmit: (formData: FormData) => void
+  locations: Locations[]
+  favLocation: string
+  forecast: Forecast | null
+  otherForecast: OtherLocations[]
+  otherError: string
+  timeOfDay: {dayOrNight: string, isDay: boolean} | undefined
+  infoModal: boolean
+  roundedValues: {
+    roundedTemp: number;
+    roundedFeelTemp: number;
+    roundedMaxTemp: number;
+    roundedMinTemp: number;
+    localUv: UvIndex;
+  } | null
+  openManageLocationsModal: () => void
+  openInfoModal: () => void
+  closeInfoModal: () => void
+}
+
+//Type for ManageLocations props object
+export type ManageLocationsProps = {
+  infoModal: boolean
+  forecast: Forecast | null
+  otherForecast: OtherLocations[]
+  locations: Locations[]
+  favLocation: string
+  roundedValues: {
+    roundedTemp: number;
+    roundedFeelTemp: number;
+    roundedMaxTemp: number;
+    roundedMinTemp: number;
+    localUv: UvIndex;
+  } | null
+  timeOfDay: {dayOrNight: string, isDay: boolean} | undefined
+  closeManageLocationsModal: () => void
+  openInfoModal: () => void
+  closeInfoModal: () => void
+  toggleFavorite: (id: string) => void
+  handleDelete: (id: string) => void
+}
+
+//Type for Information Props Object
+export type InformationProps = {
+  closeInfoModal: () => void
+}
+
+//Type for HourlyForecast Props Object
+export type HourlyForecastProps = {
+  forecast: Forecast | null
+}

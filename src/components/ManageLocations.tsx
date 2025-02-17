@@ -1,17 +1,26 @@
 import { Info, MapPin, ChevronLeft, Trash2, Star } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Information from './Information'
+import { ManageLocationsProps } from '../types'
 
 
-const ManageLocations = (props) => {
-    const { closeManageLocationsModal, openInfoModal, closeInfoModal, handleDelete, toggleFavorite, infoModal, forecast, favLocation, otherForecast, locations, roundedTemp, roundedMaxTemp, roundedMinTemp, timeOfDay, hour } = props
+const ManageLocations: React.FC<ManageLocationsProps>  = (props) => {
+    const { closeManageLocationsModal, infoModal, openInfoModal, closeInfoModal, toggleFavorite, handleDelete, forecast, otherForecast, locations, favLocation, roundedValues , timeOfDay } = props
 
 
       //Rendering "Manage Locations" Modal Elements seperately
       const modalElements = locations.map(({city, id}) => {
         const locData = otherForecast?.find(loc => loc.id === id)
+        
+        if (!locData) {
+            console.error("Location data is not found.")
+            return
+        }
 
-        return (<div key={id} className="p-5 bg-gray-800 mx-4 mb-2 rounded-2xl flex justify-between items-center group">
+        return (<div 
+                key={id} 
+                className="p-5 bg-gray-800 mx-4 mb-2 rounded-2xl flex justify-between items-center group"
+            >
             <div className="flex flex-col w-1/3">
                     <p className="flex items-center gap-2 mb-1">
                         <MapPin size={15}/> {locData.city}
@@ -84,10 +93,16 @@ const ManageLocations = (props) => {
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
-                        <div><img src={timeOfDay} alt={(hour >= 6 && hour < 19) ? "Sun Icon" : "Moon Icon"} className="w-10"/></div>
+                        <div>
+                            <img 
+                                src={timeOfDay?.dayOrNight} 
+                                alt={timeOfDay?.isDay ? "Sun Icon" : "Moon Icon"} 
+                                className="w-10"
+                            />
+                        </div>
                         <div className="flex flex-col items-center">
-                            <p className="font-bold text-lg">{roundedTemp}</p>
-                            <p className="text-xs text-white/50">{roundedMaxTemp}&deg; / {roundedMinTemp}&deg;</p>
+                            <p className="font-bold text-lg">{roundedValues?.roundedTemp}</p>
+                            <p className="text-xs text-white/50">{roundedValues?.roundedMaxTemp}&deg; / {roundedValues?.roundedMinTemp}&deg;</p>
                         </div>
                     </div>
                 </div>}

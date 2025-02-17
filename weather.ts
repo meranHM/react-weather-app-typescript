@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Forecast } from "./src/types";
+import { Forecast, WeatherAlrerts } from "./src/types";
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
 const BASE_URL = import.meta.env.VITE_WEATHER_API_URL
@@ -26,7 +26,7 @@ export const getForecast = async (city: string): Promise<Forecast | null> => {
     }
 }
 
-export const getWeatherAlerts = async (city: string) => {
+export const getWeatherAlerts = async (city: string): Promise<WeatherAlrerts | null> => {
     try {
         const response = await axios.get(`${BASE_URL}/alerts.json`, {
             params: {
@@ -35,7 +35,6 @@ export const getWeatherAlerts = async (city: string) => {
                 alerts: "yes"
             },
         })
-        console.log(response.data)
         return response.data
     } catch (error) {
         console.error("Error fetching weather alerts:", error)

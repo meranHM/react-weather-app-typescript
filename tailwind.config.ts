@@ -1,8 +1,9 @@
-/** @type {import('tailwindcss').Config} */
+import type { Config } from 'tailwindcss'
+
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx,css}",
   ],
   theme: {
     extend: {
@@ -13,7 +14,7 @@ export default {
       colors: {
         bluesky: {
           light: "#87CEEB",
-          DEFAULT: "4682B4",
+          DEFAULT: "#4682B4",
           Dark: "#1E3A8A",
         },
       },
@@ -32,5 +33,6 @@ export default {
   },
   plugins: [
     require("tailwind-scrollbar"),
-  ],
-}
+  ]
+} satisfies Config
+

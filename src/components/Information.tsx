@@ -1,7 +1,8 @@
 import { motion } from "framer-motion"
 import { ChevronLeft} from 'lucide-react'
+import { InformationProps } from "../types"
 
-const Information = ({closeInfoModal}) => {
+const Information: React.FC<InformationProps> = ({closeInfoModal}) => {
   return (
     <div id="modal-overlay"
          className="absolute top-0 left-0 w-screen h-screen bg-black/50 flex justify-center items-center z-50"

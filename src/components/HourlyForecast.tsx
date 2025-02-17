@@ -1,8 +1,15 @@
-import dropIcon from './../assets/drop.png';
+import dropIcon from './../assets/drop.png'
+import { HourlyForecastProps } from '../types'
+import React from 'react'
 
 
-const HourlyForcast = ({forecast}) => {
+const HourlyForcast: React.FC<HourlyForecastProps> = ({forecast}) => {
     const hourlyData = forecast?.forecast.forecastday[0].hour
+
+    if (!hourlyData) {
+      console.error("Location data is not found.")
+      return
+    }
   
     const hourlyElements = hourlyData.map((data, index) => {
       const hour = data.time.substring(11, 16);
