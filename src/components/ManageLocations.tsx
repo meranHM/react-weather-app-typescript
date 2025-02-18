@@ -1,12 +1,15 @@
+import { lazy, Suspense } from 'react'
 import { Info, MapPin, ChevronLeft, Trash2, Star } from 'lucide-react'
 import { motion } from 'framer-motion'
-import Information from './Information'
-import { ManageLocationsProps } from '../types'
+import { ManageLocationsProps } from '../types.ts'
+import Loader from './Loader.tsx'
 
 
 const ManageLocations: React.FC<ManageLocationsProps>  = (props) => {
     const { closeManageLocationsModal, infoModal, openInfoModal, closeInfoModal, toggleFavorite, handleDelete, forecast, otherForecast, locations, favLocation, roundedValues , timeOfDay } = props
 
+    //Lazy Loading Information component
+    const Information = lazy(() => import("../components/Information.tsx"))
 
       //Rendering "Manage Locations" Modal Elements seperately
       const modalElements = locations.map(({city, id}) => {
@@ -75,9 +78,13 @@ const ManageLocations: React.FC<ManageLocationsProps>  = (props) => {
                     >
                             <Info size={18}/>
                     </button>
-                    {infoModal && <Information 
-                                    closeInfoModal={closeInfoModal}/>
-                    }
+                    {infoModal && (
+                        <Suspense fallback={<Loader />} >
+                            <Information 
+                                closeInfoModal={closeInfoModal}
+                            />
+                        </Suspense>
+                    )}
                 </div>
                 
                 {forecast &&

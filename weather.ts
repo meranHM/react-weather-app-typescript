@@ -42,3 +42,13 @@ export const getWeatherAlerts = async (city: string): Promise<WeatherAlrerts | n
     }
 }
 
+// Helper function to validate the city by calling the weather API
+export async function validateCity(cityName: string): Promise<boolean> {
+    try {
+      const forecastData = await getForecast(cityName)
+      return forecastData !==null
+    } catch {
+      return false
+    }
+  }
+

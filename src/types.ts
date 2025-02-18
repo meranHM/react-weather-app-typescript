@@ -107,10 +107,8 @@ export type OtherLocations = {
 export type SideBarProps = {
   formSubmit: (formData: FormData) => void
   locations: Locations[]
-  favLocation: string
   forecast: Forecast | null
   otherForecast: OtherLocations[]
-  otherError: string
   timeOfDay: {dayOrNight: string, isDay: boolean} | undefined
   infoModal: boolean
   roundedValues: {
@@ -155,4 +153,11 @@ export type InformationProps = {
 //Type for HourlyForecast Props Object
 export type HourlyForecastProps = {
   forecast: Forecast | null
+}
+
+//Type for Error handler
+export type ErrorHandler = {
+  error: string
+  setError: React.Dispatch<React.SetStateAction<string>>
+  handleFetchError: (error: unknown) => void
 }

@@ -1,9 +1,13 @@
 import { Star, Info, MapPinPlusInside } from 'lucide-react'
-import Information from './Information'
-import { SideBarProps } from '../types'
+import { SideBarProps } from '../types.ts'
+import { lazy, Suspense } from 'react'
+import Loader from './Loader.tsx'
 
 const SideBar: React.FC<SideBarProps> = (props) => {
-    const {otherForecast, locations, formSubmit, openManageLocationsModal, favLocation, forecast, timeOfDay, openInfoModal, closeInfoModal, infoModal, roundedValues } = props
+    const {otherForecast, locations, formSubmit, openManageLocationsModal, forecast, timeOfDay, openInfoModal, closeInfoModal, infoModal, roundedValues } = props
+
+    //Lazy Loading Information component
+    const Information = lazy(() => import("../components/Information.tsx"))
 
     //Rendering list of elements for the sidebar list
     const cityElements = locations.map(({id}) => {
@@ -37,21 +41,25 @@ const SideBar: React.FC<SideBarProps> = (props) => {
                 <h2 className="flex items-center gap-1 mb-2 text-lg">
                     <Star size={22}/> Favorite Location
                 </h2>
-                <button className="cursor-pointer mb-1"
+                <button className="cursor-pointer mb-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         onClick={openInfoModal}
                 >
                     <Info size={20}/>
                 </button> 
-                {infoModal && <Information 
-                                closeInfoModal={closeInfoModal}/>
-                }
+                {infoModal && (
+                    <Suspense fallback={<Loader />}>
+                        <Information 
+                            closeInfoModal={closeInfoModal}
+                        />
+                    </Suspense>
+                )}
                 </div>
                 {forecast && (
                     <div id="favorite-location-container"
                         className="flex justify-between"
                     >
                         <p className="text-2xl ml-8">
-                            {favLocation}
+                            {forecast.location.name}
                         </p>
                         <p className="flex items-center gap-2 text-2xl">
                             <img src={timeOfDay?.dayOrNight}
@@ -72,7 +80,7 @@ const SideBar: React.FC<SideBarProps> = (props) => {
                     {cityElements}
                 </ul>
                 {/* Manage Locations Modal */}
-                <button className="bg-white/10 backdrop-blur-md rounded-2xl p-2 w-60 hover:bg-white/20 active:bg-white/30"
+                <button className="bg-white/10 backdrop-blur-md rounded-2xl p-2 w-60 hover:bg-white/20 active:bg-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         onClick={openManageLocationsModal}
                 >
                     Manage Locations
