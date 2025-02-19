@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid'
 import { useMediaQuery } from 'react-responsive'
 import { Forecast, AqiLevels, AqiIndex, UvIndex,
   UvLevels, Locations, WeatherAlrerts, OtherLocations } from './types.ts'
+import ManageLocations from './components/ManageLocations.tsx'
 import Loader from './components/Loader.tsx'
 import dayIcon from './assets/sun.png'
 import nightIcon from './assets/crescent-moon.png'
@@ -15,6 +16,7 @@ import windIcon from './assets/wind.png'
 import sunriseIcon from './assets/sunrise.png'
 import sunsetIcon from './assets/sunset.png'
 import useErrorHandler from './hooks/useErrorHandler.ts'
+
 
 
 const App = () => {
@@ -32,7 +34,6 @@ const App = () => {
 
  
   //Lazy Loading certain components
-  const ManageLocations = lazy(() =>  import("./components/ManageLocations.tsx"))
   const SideBar = lazy(() => import("./components/SideBar.tsx"))
   const HourlyForecast = lazy(() => import("./components/HourlyForecast.tsx"))
 
@@ -455,7 +456,6 @@ const App = () => {
               </motion.div>
           </motion.div>
           {manageLocsModal && (
-            <Suspense fallback={<Loader />}>
               <ManageLocations
                 infoModal={infoModal}
                 forecast={forecast}
@@ -470,7 +470,6 @@ const App = () => {
                 toggleFavorite={toggleFavorite}
                 handleDelete={handleDelete}
               />
-            </Suspense>
             )}
           </>
           )}
