@@ -78,7 +78,7 @@ VITE_WEATHER_API_KEY=your_api_key_here
 
 ## 🎯 Author
 
-👤 **Your Name**  
+👤 **Mehran Shahani**  
 🔗 [GitHub](https://github.com/meranHM)  
  
 
